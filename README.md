@@ -1,26 +1,27 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Tools to Align Financial Markets with Climate Goals
+# r2dii.match <a href='https://github.com/2DegreesInvesting/r2dii.match'><img src='https://imgur.com/A5ASZPE.png' align='right' height='43' /></a>
 
 <!-- badges: start -->
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
 [![Codecov test
 coverage](https://codecov.io/gh/2degreesinvesting/r2dii.match/branch/master/graph/badge.svg)](https://codecov.io/gh/2degreesinvesting/r2dii.match?branch=master)
 [![R build
 status](https://github.com/2DegreesInvesting/r2dii.match/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.match/actions)
-[![Travis build
-status](https://travis-ci.org/2DegreesInvesting/r2dii.match.svg?branch=master)](https://travis-ci.org/2DegreesInvesting/r2dii.match)
+[![R build
+status](https://github.com/2degreesinvesting/r2dii.match/workflows/R-CMD-check/badge.svg)](https://github.com/2degreesinvesting/r2dii.match/actions)
 <!-- badges: end -->
 
-These tools implement in R a fundamental part of the software ‘PACTA’
+These tools implement in R a fundamental part of the software PACTA
 (Paris Agreement Capital Transition Assessment), which is a free tool
 that calculates the alignment between financial portfolios and climate
 scenarios (<https://2degrees-investing.org/>). Financial institutions
-use ‘PACTA’ to study how their capital allocation impacts the climate.
+use PACTA to study how their capital allocation impacts the climate.
 This package matches data from financial portfolios to asset level data
 from market-intelligence databases (e.g. power plant capacities,
 emission factors, etc.). This is the first step to assess if a financial
@@ -35,8 +36,14 @@ Before you install r2dii.match you may want to:
   - [Learn how to minimize installation
     errors](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation).
 
-When you are ready, install the development version of r2dii.match from
-GitHub with:
+When you are ready, install the released version of r2dii.match from
+CRAN with:
+
+``` r
+# install.packages("r2dii.match")
+```
+
+Or install the development version of r2dii.match from GitHub with:
 
 ``` r
 # install.packages("devtools")
@@ -129,7 +136,7 @@ The result is a dataset with identical columns to the input loanbook,
 and added columns bridging all matched loans to their ald counterpart.
 
 For a more detailed walkthrough of the functionality [Get
-started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii.match.html).
+started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html).
 
 ## Acknowledgements
 
