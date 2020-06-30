@@ -31,8 +31,8 @@ portfolio aligns with climate goals.
 
 Before you install r2dii.match you may want to:
 
-  - [Try an rstudio.cloud project that has r2dii.match already
-    installed](https://rstudio.cloud/project/954051).
+  - [Try an rstudio.cloud project with this package already
+    installed](https://rstudio.cloud/project/1424833).
   - [Learn how to minimize installation
     errors](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation).
 
@@ -50,11 +50,12 @@ Or install the development version of r2dii.match from GitHub with:
 devtools::install_github("2DegreesInvesting/r2dii.match")
 ```
 
+[How to raise an
+issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
+
 ## Example
 
 ``` r
-# r2dii.data is changing rapidly; ensure you have the latest version
-# remotes::update_packages("r2dii.data", upgrade = "ask")
 library(r2dii.data)
 library(r2dii.match)
 ```
@@ -135,14 +136,5 @@ prioritize(match_result)
 The result is a dataset with identical columns to the input loanbook,
 and added columns bridging all matched loans to their ald counterpart.
 
-For a more detailed walkthrough of the functionality [Get
+[Get
 started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html).
-
-## Acknowledgements
-
-A big thanks to all 5 contributors who helped with ideas, code, or
-reviews: [cjyetman](https://github.com/cjyetman),
-[Clare2D](https://github.com/Clare2D),
-[georgeharris2deg](https://github.com/georgeharris2deg),
-[koopmand](https://github.com/koopmand),
-[vintented](https://github.com/vintented).
