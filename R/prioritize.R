@@ -17,7 +17,7 @@
 #'   * A quosure-style lambda function, e.g. `~ rev(.x)`.
 #'
 #' @seealso [match_name()], [prioritize_level()].
-#' @family user-oriented
+#' @family main functions
 #'
 #' @details
 #' **How to validate `data`**
@@ -128,8 +128,9 @@ set_priority <- function(data, priority) {
 #'
 #' @param data A data frame, commonly the output of [match_name()].
 #'
-#' @return A character vector of the default level priority per loan.
+#' @family helpers
 #'
+#' @return A character vector of the default level priority per loan.
 #' @export
 #'
 #' @examples

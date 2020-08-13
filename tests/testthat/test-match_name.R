@@ -100,20 +100,6 @@ test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
   expect_equal(nrow(out), 0L)
 })
 
-test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
-          a match", {
-  # Lookup code to sectors via r2dii.data::sector_classifications$code
-  code_for_sector_power <- 27
-  sector_not_power <- "coal"
-
-  out <- match_name(
-    fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
-    fake_ald(sector = sector_not_power),
-    by_sector = FALSE
-  )
-  expect_equal(nrow(out), 1L)
-})
-
 test_that("w/ row 1 of loanbook and crucial cols yields expected", {
   expected <- tibble(
     sector_classification_system = "NACE",
@@ -129,7 +115,8 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
     name = "Alpine Knits India Pvt. Limited",
     name_ald = "alpine knits india pvt. limited",
     score = 1,
-    source = "loanbook"
+    source = "loanbook",
+    borderline = TRUE
   )
 
   expect_equal(
@@ -138,47 +125,9 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
   )
 })
 
-expect_names_match_name <- c(
-  "id_loan",
-
-  "id_direct_loantaker",
-  "name_direct_loantaker",
-
-  "id_intermediate_parent_1",
-  "name_intermediate_parent_1",
-
-  "id_ultimate_parent",
-  "name_ultimate_parent",
-
-  "loan_size_outstanding",
-  "loan_size_outstanding_currency",
-  "loan_size_credit_limit",
-  "loan_size_credit_limit_currency",
-
-  "sector_classification_system",
-  "sector_classification_input_type",
-  "sector_classification_direct_loantaker",
-
-  "fi_type",
-  "flag_project_finance_loan",
-  "name_project",
-
-  "lei_direct_loantaker",
-  "isin_direct_loantaker",
-
-  "id_2dii",
-  "level",
-  "sector",
-  "sector_ald",
-  "name",
-  "name_ald",
-  "score",
-  "source"
-)
-
 test_that("w/ 1 row of full loanbook_demo yields expected names", {
   out <- match_name(slice(loanbook_demo, 1L), fake_ald())
-  expect_named(out, expect_names_match_name)
+  expect_equal(names(out), expect_names_match_name)
 })
 
 test_that("takes unprepared loanbook and ald datasets", {
@@ -194,8 +143,8 @@ test_that("w/ loanbook that matches nothing, yields expected", {
   )
   expect_equal(nrow(out), 0L)
   # ... but preserves minimum expected names
-  expect_named(
-    out,
+  expect_equal(
+    names(out),
     expect_names_match_name
   )
   expect_false(any(c("alias", "alias_ald") %in% names(out)))
@@ -222,15 +171,6 @@ test_that("w/ 1 lbk row matching ultimate, yields expected names", {
 test_that("takes `min_score`", {
   expect_no_error(
     match_name(slice(loanbook_demo, 1), ald_demo, min_score = 0.5)
-  )
-})
-
-test_that("takes `by_sector`", {
-  expect_false(
-    identical(
-      match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = TRUE),
-      match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = FALSE)
-    )
   )
 })
 
@@ -272,7 +212,9 @@ test_that("warns overwrite", {
 
   verify_output(
     test_path("output", "match_name-overwrite_warning.txt"),
-    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+    as.data.frame(
+      match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+    )
   )
 })
 
@@ -320,23 +262,6 @@ test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
   )
 })
 
-test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
-  # styler: off
-  data <- tribble(
-    ~var,  ~score,
-        1,      1,
-        2,      1,
-        2,   0.99,
-        3,   0.99,
-  )
-  # styler: on
-
-  expect_equal(
-    prefer_perfect_match_by(data, var),
-    tibble(var = c(1, 2, 3), score = c(1, 1, 0.99))
-  )
-})
-
 test_that("match_name()$level lacks prefix 'name_' suffix '_lbk'", {
   out <- match_name(slice(loanbook_demo, 1), ald_demo)
   expect_false(
@@ -356,8 +281,8 @@ test_that("preserves groups", {
 
 test_that("outputs id consistent with level", {
   out <- slice(loanbook_demo, 5) %>% match_name(ald_demo)
-  expect_equal(out$level, c("ultimate_parent", "direct_loantaker"))
-  expect_equal(out$id_2dii, c("UP1", "DL1"))
+  expect_equal(out$level, c("direct_loantaker", "ultimate_parent"))
+  expect_equal(out$id_2dii, c("DL1", "UP1"))
 })
 
 test_that("no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
@@ -435,9 +360,16 @@ test_that("warns/errors if some/all system classification is unknown", {
     class = "all_sec_classif_unknown",
     match_name(all_bad_code, fake_ald()),
   )
+
+  if (packageVersion("r2dii.data") > "0.1.1") {
+    path <- test_path("output", "match_name-sec_classif_unknown.txt")
+  } else {
+    path <- test_path("output", "match_name-sec_classif_unknown-cran.txt")
+  }
+
   # styler: off
   verify_output(
-    test_path("output", "match_name-sec_classif_unknown.txt"), {
+    path, {
       "# Error"
       match_name(all_bad_code, fake_ald())
 
@@ -464,7 +396,7 @@ test_that("w/ loanbook or ald with missing names errors gracefully", {
     )
   }
 
-  expect_error_missing_names(invalid(fake_ald(), "sector"))
+  expect_error_missing_names(ald = invalid(fake_ald(), "sector"))
 
   expect_error_missing_names(invalid(fake_lbk(), "name_ultimate_parent"))
   expect_error_missing_names(invalid(fake_lbk(), "id_ultimate_parent"))
@@ -521,4 +453,160 @@ test_that("with name_intermediate but not id_intermediate throws an error", {
     class = "has_name_but_not_id",
     match_name(fake_lbk(name_intermediate_parent = "a"), fake_ald())
   )
+})
+
+test_that("0-row output has expected column type", {
+  lbk <- slice(loanbook_demo, 2)
+  out <- expect_warning(match_name(lbk, ald_demo), "no match")
+
+  lbk_types <- purrr::map_chr(lbk, typeof)
+  out_types <- purrr::map_chr(out, typeof)
+
+  same <- intersect(names(out_types), names(lbk_types))
+  expect_identical(lbk_types[same], out_types[same])
+})
+
+test_that("works with UP266", {
+  skip("FIXME: Should fail with `rhub::check(platform = 'ubuntu-gcc-release')")
+
+  up266 <- filter(loanbook_demo, id_ultimate_parent == "UP266")
+  out <- match_name(up266, ald_demo)
+
+  prefix <- c(glue("id_{level()}"), glue("name_{level()}"))
+  prefix <- paste0(prefix, collapse = "|")
+
+  verify_output(
+    test_path("output", "match_name-up266.txt"),
+    select(out, id_2dii, matches(prefix))
+  )
+})
+
+test_that("with loanbook_demo and ald_demo outputs known output", {
+  skip("FIXME: This fails `rhub::check(platform = 'ubuntu-gcc-release')")
+  out <- match_name(loanbook_demo, ald_demo)
+  expect_known_value(out, "ref-match-name", update = FALSE)
+
+  # More informative when it fails
+  ref <- readRDS(test_path("ref-match-name"))
+  expect_equal(out, ref)
+})
+
+test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
+          a match", {
+  # Lookup code to sectors via r2dii.data::sector_classifications$code
+  code_for_sector_power <- 27
+  sector_not_power <- "coal"
+
+  out <- match_name(
+    fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
+    fake_ald(sector = sector_not_power),
+    by_sector = FALSE
+  )
+  expect_equal(nrow(out), 1L)
+})
+
+test_that("takes `by_sector`", {
+  expect_false(
+    identical(
+      match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = TRUE),
+      match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = FALSE)
+    )
+  )
+})
+
+test_that("w/ duplicates in ald throws now error; instead remove duplicates", {
+  dupl <- rbind(fake_ald(), fake_ald())
+  expect_error(out <- match_name(fake_lbk(), dupl), NA)
+  expect_equal(nrow(out), 1L)
+})
+
+test_that("throws an error if the `loanbook` has reserved columns", {
+  alias <- mutate(fake_lbk(), alias = "bla")
+  expect_error(
+    class = "reserved_column",
+    match_name(alias, fake_ald()),
+    regexp = "alias"
+  )
+
+  sector <- mutate(fake_lbk(), sector = "auto")
+  expect_error(
+    class = "reserved_column",
+    match_name(sector, fake_ald()),
+    regexp = "sector"
+  )
+
+  rowid <- mutate(fake_lbk(), rowid = 1L)
+  expect_error(
+    class = "reserved_column",
+    match_name(rowid, fake_ald()),
+    regexp = "rowid"
+  )
+
+  rowid_sector <- mutate(fake_lbk(), rowid = 1L, sector = "auto")
+  expect_error(
+    class = "reserved_column",
+    match_name(rowid_sector, fake_ald()),
+    regexp = "rowid.*sector"
+  )
+
+  sector_rowid <- mutate(fake_lbk(), sector = "auto", rowid = 1L)
+  expect_error(
+    class = "reserved_column",
+    match_name(sector_rowid, fake_ald()),
+    regexp = "rowid.*sector"
+  )
+})
+
+test_that("outputs correct `borderline` (#269)", {
+  # This sector-code matches the 2DII sector "coal" fully.
+  border_false <- 21000
+  coal_2dii <- "coal"
+  # This sector-code matches the 2DII sector "power" as "borderline".
+  border_true <- 36100
+  power_2dii <- "power"
+  # Confirm with:
+  # filter(sector_classifications, code %in% c(border_false, border_true))
+
+  a_code_system <- "SIC"
+  some_ids <- c(1, 2)
+  some_companies <- c("a", "b")
+
+  lbk <- fake_lbk(
+    id_loan = some_ids,
+    sector_classification_system = a_code_system,
+    id_direct_loantaker = some_ids,
+    name_direct_loantaker = some_companies,
+    sector_classification_direct_loantaker = c(border_false, border_true)
+  )
+
+  ald <- fake_ald(
+    name_company = some_companies,
+    sector = c(coal_2dii, power_2dii)
+  )
+
+  out <- match_name(lbk, ald)
+  expect_equal(out$borderline, c(FALSE, TRUE))
+})
+
+test_that("matches any case of ald$sector, but converts sector to lowercase", {
+  low <- match_name(fake_lbk(), fake_ald(sector = "power"))
+  expect_equal(low$sector, "power")
+
+  upp <- match_name(fake_lbk(), fake_ald(sector = "POWER"))
+  # The original uppercase is converted to lowercase
+  expect_equal(upp$sector, "power")
+
+  # The output is identical
+  expect_identical(low, upp)
+})
+
+test_that("matches any case of ald$name_company, but preserves original case", {
+  low <- match_name(fake_lbk(), fake_ald(name_company = "alpine knits"))
+  expect_equal(nrow(low), 1L)
+  expect_equal(low$name_ald, "alpine knits")
+
+  upp <- match_name(fake_lbk(), fake_ald(name_company = "ALPINE KNITS"))
+  expect_equal(nrow(upp), 1L)
+  # The original uppercase is preserved
+  expect_equal(upp$name_ald, "ALPINE KNITS")
 })

@@ -1,6 +1,6 @@
 Package: r2dii.match
 Title: Tools to Match Financial Portfolios with Climate Data
-Version: 0.0.3
+Version: 0.0.4
 Authors@R: 
     c(person(given = "Mauro",
              family = "Lepore",
@@ -37,19 +37,20 @@ Description: These tools implement in R a fundamental part of
     is the first step to assess if a financial portfolio aligns with
     climate goals.
 License: GPL-3
-URL: https://2degreesinvesting.github.io/r2dii.match,
+URL: https://2degreesinvesting.github.io/r2dii.match/,
         https://github.com/2DegreesInvesting/r2dii.match
 BugReports: https://github.com/2DegreesInvesting/r2dii.match/issues
 Depends: R (>= 3.4)
-Imports: dplyr (>= 0.8.5), glue, magrittr, purrr, r2dii.data, rlang,
-        stringdist, stringi, tibble, tidyr, tidyselect
+Imports: data.table, dplyr (>= 0.8.5), glue, magrittr, purrr,
+        r2dii.data, rlang, stringdist, stringi, tibble, tidyr,
+        tidyselect, utils
 Suggests: covr, rmarkdown, spelling, testthat (>= 2.1.0)
 Encoding: UTF-8
 Language: en-US
 LazyData: true
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2020-06-30 01:12:04 UTC; mauro
+Packaged: 2020-08-13 21:07:50 UTC; mauro
 Author: Mauro Lepore [aut, cre, ctr] (<https://orcid.org/0000-0002-1986-7988>),
   Jackson Hoffart [aut] (<https://orcid.org/0000-0002-8600-5042>),
   Klaus Hagedorn [aut],
@@ -58,4 +59,4 @@ Author: Mauro Lepore [aut, cre, ctr] (<https://orcid.org/0000-0002-1986-7988>),
   2 Degrees Investing Initiative [cph, fnd]
 Maintainer: Mauro Lepore <maurolepore@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-06-30 14:30:02 UTC
+Date/Publication: 2020-08-13 21:30:03 UTC

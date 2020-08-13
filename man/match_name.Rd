@@ -27,7 +27,7 @@ A \code{score} of 1 is a perfect match.}
 \item{method}{Method for distance calculation. One of \code{c("osa", "lv", "dl", "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")}. See
 \link[stringdist:stringdist-metrics]{stringdist::stringdist-metrics}.}
 
-\item{p}{Penalty factor for Jaro-Winkler distance. The valid range for 
+\item{p}{Prefix factor for Jaro-Winkler distance. The valid range for 
 \code{p} is \code{0 <= p <= 0.25}. If \code{p=0} (default), the
 Jaro-distance is returned. Applies only to \code{method='jw'}.}
 
@@ -89,21 +89,18 @@ This function ignores but preserves existing groups.
 }
 
 \examples{
-library(dplyr, warn.conflicts = FALSE)
 library(r2dii.data)
 
-mini_loanbook <- sample_n(loanbook_demo, 10)
+# Small data for examples
+loanbook <- head(loanbook_demo, 50)
+ald <- head(ald_demo, 50)
 
-match_name(mini_loanbook, ald_demo)
+match_name(loanbook, ald)
 
-match_name(
-  mini_loanbook, ald_demo,
-  min_score = 0.9,
-  by_sector = TRUE
-)
+match_name(loanbook, ald, min_score = 0.9)
 }
 \seealso{
-Other user-oriented: 
+Other main functions: 
 \code{\link{prioritize}()}
 }
-\concept{user-oriented}
+\concept{main functions}
