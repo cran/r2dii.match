@@ -60,7 +60,7 @@ restructure_loanbook <- function(data, overwrite = NULL) {
 
   out <- may_add_sector_and_borderline(data)
   out <- select(
-    out, .data$rowid, important_columns, .data$sector, .data$borderline
+    out, .data$rowid, all_of_(important_columns), .data$sector, .data$borderline
   )
   out <- identify_loans_by_level(out)
   out <- identify_loans_by_name(out)
@@ -73,7 +73,11 @@ restructure_loanbook <- function(data, overwrite = NULL) {
 }
 
 may_add_sector_and_borderline <- function(data) {
-  if (has_sector_and_borderline(data)) {
+  if (lacks_borderline(data) || lacks_sector(data)) {
+    abort("Must have both `sector` and `borderline`")
+  }
+
+  if (has_sector(data) & has_borderline(data)) {
     data2 <- data
   } else {
     data2 <- add_sector_and_borderline(data)
@@ -111,9 +115,10 @@ overwrite_name_and_sector <- function(data, overwrite) {
     select(names(data))
 }
 
-has_sector_and_borderline <- function(data) {
-  has_name(data, "sector") & has_name(data, "borderline")
-}
+has_sector <- function(data) has_name(data, "sector")
+has_borderline <- function(data) has_name(data, "borderline")
+lacks_sector <- function(data) !has_sector(data) & has_borderline(data)
+lacks_borderline <- function(data) has_sector(data) & !has_borderline(data)
 
 add_alias <- function(data) {
   aliases <- to_alias(data[["name"]])
@@ -194,7 +199,7 @@ identify_loans_by_name <- function(data) {
   data %>%
     purrr::modify_at(cols, as.character) %>%
     tidyr::pivot_longer(
-      cols = cols,
+      cols = all_of_(cols),
       names_to = "level2",
       names_prefix = "name_",
       values_to = "name"

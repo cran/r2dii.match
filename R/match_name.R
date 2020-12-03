@@ -25,6 +25,7 @@
 #'   only `sector`, the value in the `name` column should be `NA` and
 #'   vice-versa. This file can be used to manually match loanbook companies to
 #'   ald.
+#' @param ... Arguments passed on to [stringdist::stringsim()].
 #'
 #' @family main functions
 #'
@@ -69,7 +70,8 @@ match_name <- function(loanbook,
                        min_score = 0.8,
                        method = "jw",
                        p = 0.1,
-                       overwrite = NULL) {
+                       overwrite = NULL,
+                       ...) {
   restore <- options(datatable.allow.cartesian = TRUE)
   on.exit(options(restore), add = TRUE)
 
@@ -80,7 +82,8 @@ match_name <- function(loanbook,
     min_score = min_score,
     method = method,
     p = p,
-    overwrite = overwrite
+    overwrite = overwrite,
+    ...
   )
 }
 
@@ -90,11 +93,12 @@ match_name_impl <- function(loanbook,
                             min_score = 0.8,
                             method = "jw",
                             p = 0.1,
-                            overwrite = NULL) {
+                            overwrite = NULL,
+                            ...) {
   old_groups <- dplyr::groups(loanbook)
   loanbook <- ungroup(loanbook)
 
-  abort_reserved_column(loanbook)
+  if (!allow_reserved_columns()) abort_reserved_column(loanbook)
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
 
   prep_lbk <- restructure_loanbook(loanbook_rowid, overwrite = overwrite)
@@ -117,7 +121,7 @@ match_name_impl <- function(loanbook,
     ,
     score := stringdist::stringsim(
       alias_lbk, alias_ald,
-      method = method, p = p
+      method = method, p = p, ...
     )
   ]
   setkey(a, score)
@@ -146,7 +150,9 @@ match_name_impl <- function(loanbook,
 
   # Restore columns from loanbook
   setDT(loanbook_rowid)
-  matched <- loanbook_rowid[matched, on = "rowid"]
+  maybe_columns <- c("rowid", "sector", "borderline")
+  join_on <- intersect(maybe_columns, names(loanbook_rowid))
+  matched <- loanbook_rowid[matched, on = join_on]
   matched <- matched[, rowid := NULL]
   matched <- as_tibble(matched)
 
@@ -157,6 +163,10 @@ match_name_impl <- function(loanbook,
   attr(matched, ".internal.selfref") <- NULL
 
   matched
+}
+
+allow_reserved_columns <- function() {
+  isTRUE(getOption("r2dii.match.allow_reserved_columns"))
 }
 
 abort_reserved_column <- function(data) {
@@ -192,8 +202,8 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
 
 expand_alias <- function(loanbook, ald) {
   vars <- c("sector", "alias")
-  l <- nest_by(select(loanbook, vars), .data$sector, .key = "alias_lbk")
-  a <- nest_by(select(ald, vars), .data$sector, .key = "alias_ald")
+  l <- nest_by(select(loanbook, all_of_(vars)), .data$sector, .key = "alias_lbk")
+  a <- nest_by(select(ald, all_of_(vars)), .data$sector, .key = "alias_ald")
   la <- dplyr::inner_join(l, a, by = "sector")
 
   purrr::map2_df(
@@ -237,7 +247,7 @@ reorder_names_as_in_loanbook <- function(data, loanbook) {
 
   data %>%
     select(
-      names_in_loanbook,
+      all_of_(names_in_loanbook),
       # New names
       !!!names_added_by_match_name(),
       # In case I missed something

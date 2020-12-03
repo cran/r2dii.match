@@ -1,4 +1,4 @@
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 library(r2dii.data)
 
 test_that("w/ non-NA only at intermediate level yields matches at intermediate
@@ -119,6 +119,8 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
     borderline = TRUE
   )
 
+  if (packageVersion("r2dii.data") > "0.1.4") expected$borderline <- FALSE
+
   expect_equal(
     match_name(fake_lbk(), fake_ald()),
     expected
@@ -135,7 +137,7 @@ test_that("takes unprepared loanbook and ald datasets", {
 })
 
 test_that("w/ loanbook that matches nothing, yields expected", {
-  # Matches cero row ...
+  # Matches zero row ...
   lbk2 <- slice(loanbook_demo, 2)
   expect_warning(
     out <- match_name(lbk2, ald_demo),
@@ -210,11 +212,8 @@ test_that("warns overwrite", {
     match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
   )
 
-  verify_output(
-    test_path("output", "match_name-overwrite_warning.txt"),
-    as.data.frame(
-      match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
-    )
+  expect_snapshot(
+    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
   )
 })
 
@@ -349,9 +348,12 @@ test_that("warns/errors if some/all system classification is unknown", {
   bad <- -999
   some_bad_code <- fake_lbk(sector_classification_direct_loantaker = c(35, bad))
 
-  expect_warning(
-    class = "some_sec_classif_unknown",
-    match_name(some_bad_code, fake_ald()),
+  suppressWarnings(
+    # In this expectation, we only care about this specific warning
+    expect_warning(
+      class = "some_sec_classif_unknown",
+      match_name(some_bad_code, fake_ald())
+    )
   )
 
   all_bad_code <- fake_lbk(sector_classification_direct_loantaker = c(bad, bad))
@@ -360,28 +362,12 @@ test_that("warns/errors if some/all system classification is unknown", {
     class = "all_sec_classif_unknown",
     match_name(all_bad_code, fake_ald()),
   )
-
-  # styler: off
-  verify_output(
-    test_path("output", "match_name-sec_classif_unknown.txt"), {
-      "# Error"
-      match_name(all_bad_code, fake_ald())
-
-      match_name(all_bad_system, fake_ald())
-
-      "# Warning"
-      invisible(match_name(some_bad_code, fake_ald()))
-
-      invisible(match_name(some_bad_system, fake_ald()))
-    }
-  )
-  # styler: on
 })
 
 # crucial names -----------------------------------------------------------
 
 test_that("w/ loanbook or ald with missing names errors gracefully", {
-  invalid <- function(data, x) dplyr::rename(data, bad = x)
+  invalid <- function(data, x) dplyr::rename(data, bad = all_of_(x))
 
   expect_error_missing_names <- function(lbk = NULL, ald = NULL) {
     expect_error(
@@ -469,21 +455,16 @@ test_that("works with UP266", {
   prefix <- c(glue("id_{level()}"), glue("name_{level()}"))
   prefix <- paste0(prefix, collapse = "|")
 
-  verify_output(
-    test_path("output", "match_name-up266.txt"),
-    select(out, id_2dii, matches(prefix))
-  )
+  expect_snapshot(select(out, .data$id_2dii, matches(prefix)))
 })
 
-test_that("with loanbook_demo and ald_demo outputs known output", {
+test_that("with loanbook_demo and ald_demo outputs expected value", {
   skip_if(on_platform_that_fails_misteriously(), "We don't bother testing")
+  # TODO: Remove once r2dii.data 0.1.5 is on CRAN
+  skip_if(packageVersion("r2dii.data") <= "0.1.4", "We expect different output")
 
   out <- match_name(loanbook_demo, ald_demo)
-  expect_known_value(out, "ref-match-name", update = FALSE)
-
-  # More informative when it fails
-  ref <- readRDS(test_path("ref-match-name"))
-  expect_equal(out, ref)
+  expect_snapshot_value(round_dbl(out), style = "json2")
 })
 
 test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
@@ -604,4 +585,81 @@ test_that("matches any case of ald$name_company, but preserves original case", {
   expect_equal(nrow(upp), 1L)
   # The original uppercase is preserved
   expect_equal(upp$name_ald, "ALPINE KNITS")
+})
+
+test_that("with arguments passed via ellipsis, throws no error (#310)", {
+  # `q` isn't a formal argument of `match_name()`
+  expect_false(any(grepl("^q$", names(formals(match_name)))))
+
+  # `q` should pass `...` with no error
+  expect_no_error(match_name(fake_lbk(), fake_ald(), method = "qgram", q = 1))
+})
+
+test_that("with arguments passed via ellipsis, outputs the expected score", {
+  lbk <-
+    fake_lbk(name_direct_loantaker = "Yuamen Changyuan Hydropower Co., Ltd.")
+  ald <-
+    fake_ald(name_company = "yiyang baoyuan power generation co., ltd.")
+
+  this_q <- 0.5
+  expected1 <- stringdist::stringsim(
+    to_alias(lbk$name_direct_loantaker),
+    to_alias(ald$name_company),
+    method = "qgram", q = this_q
+  )
+
+  out1 <- match_name(lbk, ald, method = "qgram", q = this_q)
+  expect_equal(unique(out1$score), expected1)
+
+  this_q <- 1
+  expected2 <- stringdist::stringsim(
+    to_alias(lbk$name_direct_loantaker),
+    to_alias(ald$name_company),
+    method = "qgram", q = this_q
+  )
+
+  # Ensure this test does not just duplicate the previous one
+  expect_false(identical(expected1, expected2))
+
+  out2 <- match_name(lbk, ald, method = "qgram", q = this_q)
+  expect_equal(unique(out2$score), expected2)
+})
+
+test_that("with relevant options allows loanbook with reserved columns", {
+  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
+  on.exit(options(restore), add = TRUE)
+
+  lbk <- mutate(fake_lbk(), sector = "a", borderline = FALSE)
+  expect_no_error(
+    # Don't warn if found no match
+    suppressWarnings(match_name(lbk, fake_ald()))
+  )
+})
+
+test_that("w/ loanbook w/ reserved cols, outputs sector not i.sector (#330)", {
+  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
+  on.exit(options(restore), add = TRUE)
+
+  reserved <- mutate(fake_lbk(), sector = "power", borderline = FALSE)
+  out <- match_name(reserved, fake_ald())
+
+  expect_true(utils::hasName(out, "sector"))
+  expect_false(utils::hasName(out, "i.sector"))
+})
+
+test_that("w/ loanbook lacking sector or borderline, errors gracefully (#330)", {
+  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
+  on.exit(options(restore), add = TRUE)
+
+  lacks_borderline <- mutate(fake_lbk(), sector = "power")
+  expect_error(
+    match_name(lacks_borderline, fake_ald()),
+    "Must have both `sector` and `borderline`"
+  )
+
+  lacks_sector <- mutate(fake_lbk(), borderline = TRUE)
+  expect_error(
+    match_name(lacks_sector, fake_ald()),
+    "Must have both `sector` and `borderline`"
+  )
 })
