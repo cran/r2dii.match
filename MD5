@@ -1,7 +1,7 @@
-aa13ab9ad8836b651cda3195f33300b5 *DESCRIPTION
+7cad80718e4380920429cf190b7e2348 *DESCRIPTION
 25aa15110ef76a0fe135d187268878a5 *LICENSE
 c3084cf9066a0e5d1199b55ee97f032e *NAMESPACE
-2d11be7b6a1a5a1a368e5b67db33e4f2 *NEWS.md
+b1746d2c9aca53339c6c1c4ef2f29e08 *NEWS.md
 d88d7efd9b7556c7b23a4058ad0cb826 *R/add_sector_and_borderline.R
 61ddfdcd3b4eafc1fa41f13da92e2ba0 *R/check_crucial_names.R
 7564e5cf8caf6f8dca3d0c4e4393d638 *R/crucial_lbk.R
@@ -15,7 +15,7 @@ bbd299eb4ff89a1e4a329ad5114822ff *R/to_alias.R
 49fd16f67feeef5bcd6064bfa43068c6 *R/uniquify_id_column.R
 65cef5e0674056f6fc07dd2b3ca85c13 *R/utils-pipe.R
 4db473df09ab0e26299edbb13c8670f1 *R/utils.R
-9da0b85eb848fcdf7ca4f0d3359ded31 *README.md
+fcc9278f2815ae01dd1f972156c3c8c0 *README.md
 4bf223a324732e9fddcd0c7d5165ad20 *inst/WORDLIST
 66a9eb96eac55f86cc7cef2ecf8da5f6 *man/crucial_lbk.Rd
 61c8c7e9a06a5720841f612bf40884ca *man/match_name.Rd
@@ -28,7 +28,6 @@ ac8fd1e9dfc13cd1161b992b6209abf8 *man/prioritize_level.Rd
 69cd39daf0db8b62d44a300ceb2173f5 *tests/testthat/_snaps/add_sector_and_borderline.md
 1e01f4145834b24b22a7da5e2a2b8adf *tests/testthat/_snaps/helper-fake_lbk.md
 ce0f0dbbe0e072bcc2269807a367e91f *tests/testthat/_snaps/match_name.md
-324d7854efee9c4400b315608fa92636 *tests/testthat/_snaps/prioritize.md
 469869c6b355ec78e5bba44f849c7b6d *tests/testthat/helper-cnd.R
 d0cccbc7b668e1949924bda2fbbf659b *tests/testthat/helper-expect_names_match_name.R
 8f39417c3f3994e0a9b975f2d6233af0 *tests/testthat/helper-fake_lbk.R
@@ -40,7 +39,7 @@ da3e63bcd13b859e3a13508930a7951d *tests/testthat/test-check_crucial_names.R
 22cd3cca3b1e0d1b9c4cd393d6d64ca7 *tests/testthat/test-crucial_lbk.R
 6d08069e4ba8ca1c79bfe66f543aacde *tests/testthat/test-helper-fake_lbk.R
 593da0b7f43221e5ddefaf089cd77e27 *tests/testthat/test-match_name.R
-b9b8e92f855346a0c6218d47d19c5e00 *tests/testthat/test-prioritize.R
+f26b40033d3c332ed6087b1e9c3b046a *tests/testthat/test-prioritize.R
 4853fbb80b13d772ef3e5531dcd8ab5b *tests/testthat/test-restructure_ald.R
 eac65a942b88b872c6772c3d735f2a26 *tests/testthat/test-select_chr.R
 323b135f7ccbf21349cebf49571c7ca9 *tests/testthat/test-to_alias.R

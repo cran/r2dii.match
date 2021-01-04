@@ -1,6 +1,6 @@
 Package: r2dii.match
 Title: Tools to Match Financial Portfolios with Climate Data
-Version: 0.0.7
+Version: 0.0.8
 Authors@R: 
     c(person(given = "Mauro",
              family = "Lepore",
@@ -51,7 +51,7 @@ Language: en-US
 LazyData: true
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2020-12-03 14:50:27 UTC; mauro
+Packaged: 2021-01-04 12:36:04 UTC; mauro
 Author: Mauro Lepore [aut, cre, ctr] (<https://orcid.org/0000-0002-1986-7988>),
   Jackson Hoffart [aut] (<https://orcid.org/0000-0002-8600-5042>),
   Klaus Hagedorn [aut],
@@ -60,4 +60,4 @@ Author: Mauro Lepore [aut, cre, ctr] (<https://orcid.org/0000-0002-1986-7988>),
   2 Degrees Investing Initiative [cph, fnd]
 Maintainer: Mauro Lepore <maurolepore@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-12-03 15:10:02 UTC
+Date/Publication: 2021-01-04 15:40:02 UTC
