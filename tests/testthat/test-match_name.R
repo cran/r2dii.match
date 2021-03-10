@@ -447,8 +447,6 @@ test_that("0-row output has expected column type", {
 })
 
 test_that("works with UP266", {
-  skip_if(on_platform_that_fails_misteriously(), "We don't bother testing")
-
   up266 <- filter(loanbook_demo, id_ultimate_parent == "UP266")
   out <- match_name(up266, ald_demo)
 
@@ -459,10 +457,6 @@ test_that("works with UP266", {
 })
 
 test_that("with loanbook_demo and ald_demo outputs expected value", {
-  skip_if(on_platform_that_fails_misteriously(), "We don't bother testing")
-  # TODO: Remove once r2dii.data 0.1.5 is on CRAN
-  skip_if(packageVersion("r2dii.data") <= "0.1.4", "We expect different output")
-
   out <- match_name(loanbook_demo, ald_demo)
   expect_snapshot_value(round_dbl(out), style = "json2")
 })
@@ -662,4 +656,28 @@ test_that("w/ loanbook lacking sector or borderline, errors gracefully (#330)", 
     match_name(lacks_sector, fake_ald()),
     "Must have both `sector` and `borderline`"
   )
+})
+
+test_that("errors if any id_loan is duplicated (#349)", {
+  duplicated <- rep.int(1, times = 2)
+  lbk <- fake_lbk(id_loan = duplicated)
+  ald <- fake_ald()
+
+  expect_snapshot_error(match_name(lbk, ald))
+  expect_error(class = "duplicated_id_loan", match_name(lbk, ald))
+})
+
+test_that("allows custom `sector_classifications` via options() (#354)", {
+  loanbook <- fake_lbk(sector_classification_system = "XYZ")
+  ald <- fake_ald()
+  custom_classification <- tibble::tribble(
+    ~sector,       ~borderline,  ~code, ~code_system,
+    "power",             FALSE, "3511",        "XYZ",
+  )
+
+  # Allow users to inject their own `sector_classifications`
+  old <- options(r2dii.match.sector_classifications = custom_classification)
+  out <- match_name(loanbook, ald)
+  expect_equal(nrow(out), 1L)
+  options(old)
 })
