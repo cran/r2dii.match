@@ -1,3 +1,7 @@
+# r2dii.match 0.0.10
+
+* Maintenance release.
+
 # r2dii.match 0.0.9
 
 * With `options(r2dii.match.sector_classifications = own)` users can inject

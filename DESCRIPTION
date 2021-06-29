@@ -1,6 +1,6 @@
 Package: r2dii.match
-Title: Tools to Match Financial Portfolios with Climate Data
-Version: 0.0.9
+Title: Tools to Match Corporate Lending Portfolios with Climate Data
+Version: 0.0.10
 Authors@R: 
     c(person(given = "Mauro",
              family = "Lepore",
@@ -26,16 +26,16 @@ Authors@R:
       person(given = "2 Degrees Investing Initiative",
              role = c("cph", "fnd"),
              email = "contact@2degrees-investing.org"))
-Description: These tools implement in R a fundamental part of
-    the software 'PACTA' (Paris Agreement Capital Transition Assessment),
-    which is a free tool that calculates the alignment between financial
-    portfolios and climate scenarios (<https://2degrees-investing.org/>).
-    Financial institutions use 'PACTA' to study how their capital
-    allocation impacts the climate. This package matches data from
-    financial portfolios to asset level data from market-intelligence
-    databases (e.g. power plant capacities, emission factors, etc.). This
-    is the first step to assess if a financial portfolio aligns with
-    climate goals.
+Description: These tools implement in R a fundamental part of the software
+    'PACTA' (Paris Agreement Capital Transition Assessment), which is a
+    free tool that calculates the alignment between financial portfolios
+    and climate scenarios (<https://2degrees-investing.org/>). Financial
+    institutions use 'PACTA' to study how their capital allocation
+    decisions align with climate change mitigation goals. This package
+    matches data from corporate lending portfolios to asset level data
+    from market-intelligence databases (e.g. power plant capacities,
+    emission factors, etc.). This is the first step to assess if a
+    financial portfolio aligns with climate goals.
 License: MIT + file LICENSE
 URL: https://2degreesinvesting.github.io/r2dii.match/,
         https://github.com/2DegreesInvesting/r2dii.match
@@ -48,10 +48,9 @@ Suggests: covr, rmarkdown, spelling, testthat (>= 2.1.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
-LazyData: true
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2021-03-10 18:54:10 UTC; mauro
+Packaged: 2021-06-29 20:44:21 UTC; mauro
 Author: Mauro Lepore [aut, cre, ctr] (<https://orcid.org/0000-0002-1986-7988>),
   Jackson Hoffart [aut] (<https://orcid.org/0000-0002-8600-5042>),
   Klaus Hagedorn [aut],
@@ -60,4 +59,4 @@ Author: Mauro Lepore [aut, cre, ctr] (<https://orcid.org/0000-0002-1986-7988>),
   2 Degrees Investing Initiative [cph, fnd]
 Maintainer: Mauro Lepore <maurolepore@gmail.com>
 Repository: CRAN
-Date/Publication: 2021-03-10 19:10:02 UTC
+Date/Publication: 2021-06-29 21:00:02 UTC
