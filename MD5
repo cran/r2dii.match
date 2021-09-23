@@ -1,7 +1,7 @@
-e9eb479f112f8c7afc9689bd7cf3b971 *DESCRIPTION
+1b2de7153abe973447ddb57e2df35e89 *DESCRIPTION
 25aa15110ef76a0fe135d187268878a5 *LICENSE
 c3084cf9066a0e5d1199b55ee97f032e *NAMESPACE
-0a93da34fde1e63c09698dfa44cf468a *NEWS.md
+466b792c904255520f65ae616badbec5 *NEWS.md
 a4edff7f9e36bef8243552d16bb2cf5d *R/add_sector_and_borderline.R
 61ddfdcd3b4eafc1fa41f13da92e2ba0 *R/check_crucial_names.R
 7564e5cf8caf6f8dca3d0c4e4393d638 *R/crucial_lbk.R
@@ -15,7 +15,7 @@ bbd299eb4ff89a1e4a329ad5114822ff *R/to_alias.R
 49fd16f67feeef5bcd6064bfa43068c6 *R/uniquify_id_column.R
 65cef5e0674056f6fc07dd2b3ca85c13 *R/utils-pipe.R
 4db473df09ab0e26299edbb13c8670f1 *R/utils.R
-6c4a501c366f87b4913bb83d954581b5 *README.md
+a0d46836b77b1be84265fd25ef839c95 *README.md
 93a684ea9ef8f8b88f8d61c613fc2974 *inst/WORDLIST
 66a9eb96eac55f86cc7cef2ecf8da5f6 *man/crucial_lbk.Rd
 ad685d1a9681de783bc6ceffe2e1136a *man/match_name.Rd
@@ -38,7 +38,7 @@ d01f5171c74f9c9e1bc5cc93e6e19008 *tests/testthat/ref-helper-fake_lbk
 da3e63bcd13b859e3a13508930a7951d *tests/testthat/test-check_crucial_names.R
 22cd3cca3b1e0d1b9c4cd393d6d64ca7 *tests/testthat/test-crucial_lbk.R
 6d08069e4ba8ca1c79bfe66f543aacde *tests/testthat/test-helper-fake_lbk.R
-fb6915511712cf2c462f6471437692bd *tests/testthat/test-match_name.R
+1b9bb2530d699bb55282e997096836f7 *tests/testthat/test-match_name.R
 f26b40033d3c332ed6087b1e9c3b046a *tests/testthat/test-prioritize.R
 4853fbb80b13d772ef3e5531dcd8ab5b *tests/testthat/test-restructure_ald.R
 eac65a942b88b872c6772c3d735f2a26 *tests/testthat/test-select_chr.R
