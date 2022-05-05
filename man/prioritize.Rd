@@ -32,7 +32,7 @@ desired match. By default, the highest \code{priority} is the most granular matc
 \details{
 \strong{How to validate \code{data}}
 
-Write the output of \code{match_name()} into a .csv file with:\if{html}{\out{<div class="r">}}\preformatted{# Writting to current working directory
+Write the output of \code{match_name()} into a .csv file with:\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Writting to current working directory
 matched \%>\%
   readr::write_csv("matched.csv")
 }\if{html}{\out{</div>}}
@@ -41,7 +41,7 @@ Compare, edit, and save the data manually:
 \itemize{
 \item Open \emph{matched.csv} with any spreadsheet editor (Excel, Google
 Sheets, etc.).
-\item Compare the columns \code{name} and \code{name_ald} manually to determine if
+\item Compare the columns \code{name} and \code{name_abcd} manually to determine if
 the match is valid. Other information can be used in conjunction
 with just the names to ensure the two entities match (sector,
 internal information on the company structure, etc.)
@@ -54,7 +54,7 @@ internal information on the company structure, etc.)
 \item Save the edited file as, say, \emph{valid_matches.csv}.
 }
 
-Re-read the edited file (validated) with:\if{html}{\out{<div class="r">}}\preformatted{# Reading from current working directory
+Re-read the edited file (validated) with:\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Reading from current working directory
 valid_matches <- readr::read_csv("valid_matches.csv")
 }\if{html}{\out{</div>}}
 }
@@ -68,7 +68,7 @@ library(dplyr)
 
 # styler: off
 matched <- tribble(
-  ~sector, ~sector_ald,  ~score, ~id_loan,                ~level,
+  ~sector, ~sector_abcd,  ~score, ~id_loan,                ~level,
    "coal",      "coal",       1,     "aa",     "ultimate_parent",
    "coal",      "coal",       1,     "aa",    "direct_loantaker",
    "coal",      "coal",       1,     "bb", "intermediate_parent",
