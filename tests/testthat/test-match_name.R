@@ -206,11 +206,8 @@ test_that("takes `overwrite`", {
 
 test_that("warns overwrite", {
   expect_warning(
-    match_name(fake_lbk(), fake_abcd(), overwrite = overwrite_demo)
-  )
-
-  expect_snapshot(
-    match_name(fake_lbk(), fake_abcd(), overwrite = overwrite_demo)
+    match_name(fake_lbk(), fake_abcd(), overwrite = overwrite_demo),
+    class = "overwrite_warning"
   )
 })
 
@@ -450,7 +447,10 @@ test_that("works with UP266", {
   prefix <- c(glue("id_{level()}"), glue("name_{level()}"))
   prefix <- paste0(prefix, collapse = "|")
 
-  expect_snapshot(select(out, .data$id_2dii, matches(prefix)))
+  expect_snapshot_value(
+    select(out, .data$id_2dii, matches(prefix)),
+    style = "json2"
+    )
 })
 
 test_that("with loanbook_demo and abcd_demo outputs expected value", {

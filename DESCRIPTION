@@ -1,6 +1,6 @@
 Package: r2dii.match
 Title: Tools to Match Corporate Lending Portfolios with Climate Data
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     c(person(given = "Jackson",
              family = "Hoffart",
@@ -49,9 +49,9 @@ Suggests: covr, rmarkdown, spelling, testthat (>= 2.1.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 NeedsCompilation: no
-Packaged: 2022-05-05 16:16:07 UTC; jdhoffa
+Packaged: 2022-09-05 11:52:00 UTC; jdhoffa
 Author: Jackson Hoffart [aut, cre] (<https://orcid.org/0000-0002-8600-5042>),
   Mauro Lepore [aut, ctr] (<https://orcid.org/0000-0002-1986-7988>),
   Klaus Hagedorn [aut],
@@ -60,4 +60,4 @@ Author: Jackson Hoffart [aut, cre] (<https://orcid.org/0000-0002-8600-5042>),
   2 Degrees Investing Initiative [cph, fnd]
 Maintainer: Jackson Hoffart <jackson.hoffart@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-05-05 23:20:14 UTC
+Date/Publication: 2022-09-05 12:50:05 UTC

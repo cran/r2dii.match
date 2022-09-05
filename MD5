@@ -1,7 +1,7 @@
-e5ca4d6f21f4b3af5111e34a44853069 *DESCRIPTION
+8be28f2d60fad7adaa7381cc828c2293 *DESCRIPTION
 25aa15110ef76a0fe135d187268878a5 *LICENSE
 3f26894df6025da61b7147730f48c8b2 *NAMESPACE
-8025d9a65500cf0002b03ca09d17ecde *NEWS.md
+cab50639e01c672b9fff493e4ebc217f *NEWS.md
 a4edff7f9e36bef8243552d16bb2cf5d *R/add_sector_and_borderline.R
 61ddfdcd3b4eafc1fa41f13da92e2ba0 *R/check_crucial_names.R
 7564e5cf8caf6f8dca3d0c4e4393d638 *R/crucial_lbk.R
@@ -15,8 +15,8 @@ bbd299eb4ff89a1e4a329ad5114822ff *R/to_alias.R
 49fd16f67feeef5bcd6064bfa43068c6 *R/uniquify_id_column.R
 65cef5e0674056f6fc07dd2b3ca85c13 *R/utils-pipe.R
 4db473df09ab0e26299edbb13c8670f1 *R/utils.R
-17c1aab8b6802e1f8b5a74bf13c1a618 *README.md
-93a684ea9ef8f8b88f8d61c613fc2974 *inst/WORDLIST
+1582c9329144734b7a2dc56c0f3b9545 *README.md
+475e8eaab1b8c6df0b4b8a76222e3d70 *inst/WORDLIST
 66a9eb96eac55f86cc7cef2ecf8da5f6 *man/crucial_lbk.Rd
 cb1e46f469cfbbbde29c8b5113e1d789 *man/figures/lifecycle-archived.svg
 c0d2e5a54f1fa4ff02bf9533079dd1f7 *man/figures/lifecycle-defunct.svg
@@ -29,14 +29,14 @@ c3978703d8f40f2679795335715e98f4 *man/figures/lifecycle-experimental.svg
 2bcd7c0d8e55f132357e1f2d77f7e3ee *man/figures/logo.svg
 0bddcf947657fbd8c9c7c6281db9413e *man/match_name.Rd
 4894ca10756199e25f914bfd34f517b0 *man/pipe.Rd
-15d78b329a37d67da6315e281be6d501 *man/prioritize.Rd
+16ccbfaf891237dbcec9212dbd93ac93 *man/prioritize.Rd
 ac8fd1e9dfc13cd1161b992b6209abf8 *man/prioritize_level.Rd
-78a67e9cf6ffde8dffc05a70cff85003 *man/r2dii.match-package.Rd
+290a1424bea276508d31ffbf2639014c *man/r2dii.match-package.Rd
 3624bbb7f9f9ed7305645d9d97c2bfe7 *tests/spelling.R
 58ac582a88085b6f43db8859706fa9b3 *tests/testthat.R
 b6aa3fa8e2b10985118ad013d08226e1 *tests/testthat/_snaps/add_sector_and_borderline.md
 1e01f4145834b24b22a7da5e2a2b8adf *tests/testthat/_snaps/helper-fake_lbk.md
-33ac7097eaa0a364dd35a849d2d06549 *tests/testthat/_snaps/match_name.md
+15eaebd65fe3cebb0fd0c5521254629e *tests/testthat/_snaps/match_name.md
 469869c6b355ec78e5bba44f849c7b6d *tests/testthat/helper-cnd.R
 06855a61b15084ef7755fee8f454fb64 *tests/testthat/helper-expect_names_match_name.R
 7b9bac391b3606697a00603c4296c270 *tests/testthat/helper-fake_lbk.R
@@ -47,7 +47,7 @@ d01f5171c74f9c9e1bc5cc93e6e19008 *tests/testthat/ref-helper-fake_lbk
 da3e63bcd13b859e3a13508930a7951d *tests/testthat/test-check_crucial_names.R
 22cd3cca3b1e0d1b9c4cd393d6d64ca7 *tests/testthat/test-crucial_lbk.R
 ddff6a02f3b7112c3d821f0e5fb21e42 *tests/testthat/test-helper-fake_lbk.R
-82279dfff4cca7e6c64cc58481293ad1 *tests/testthat/test-match_name.R
+6f06a5ac33d2c32fe8f0191c18975a85 *tests/testthat/test-match_name.R
 e267cec3e81234a3b8fa2fccbfed8d00 *tests/testthat/test-prioritize.R
 7b8230c27ae3e62e68c6b869552d1af3 *tests/testthat/test-restructure_abcd.R
 eac65a942b88b872c6772c3d735f2a26 *tests/testthat/test-select_chr.R
