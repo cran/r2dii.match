@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# r2dii.match <img src="man/figures/logo.svg" align="right" width="120" />
+# r2dii.match <img src="man/figures/logo.png" align="right" width="120" />
 
 <!-- badges: start -->
 
@@ -11,14 +11,14 @@ maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lif
 status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
 [![Codecov test
-coverage](https://codecov.io/gh/2DegreesInvesting/r2dii.match/branch/main/graph/badge.svg)](https://app.codecov.io/gh/2DegreesInvesting/r2dii.match?branch=main)
-[![R-CMD-check](https://github.com/2DegreesInvesting/r2dii.match/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/2DegreesInvesting/r2dii.match/actions/workflows/R-CMD-check.yaml)
+coverage](https://codecov.io/gh/RMI-PACTA/r2dii.match/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RMI-PACTA/r2dii.match?branch=main)
+[![R-CMD-check](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 These tools implement in R a fundamental part of the software PACTA
 (Paris Agreement Capital Transition Assessment), which is a free tool
 that calculates the alignment between financial portfolios and climate
-scenarios (<https://2degrees-investing.org/>). Financial institutions
+scenarios (<https://www.transitionmonitor.com/>). Financial institutions
 use PACTA to study how their capital allocation impacts the climate.
 This package matches data from financial portfolios to asset level data
 from market-intelligence databases (e.g. power plant capacities,
@@ -37,11 +37,8 @@ Or install the development version of r2dii.match from GitHub with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("2DegreesInvesting/r2dii.match")
+devtools::install_github("RMI-PACTA/r2dii.match")
 ```
-
-[How to raise an
-issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
 
 ## Example
 
@@ -121,17 +118,16 @@ The result is a dataset with identical columns to the input loanbook,
 and added columns bridging all matched loans to their abcd counterpart.
 
 [Get
-started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html).
+started](https://rmi-pacta.github.io/r2dii.match/articles/r2dii-match.html).
 
 ## Funding
 
 This project has received funding from the [European Union LIFE
 program](https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/)
-and the [International Climate Initiative
-(IKI)](https://www.international-climate-initiative.com/en/search-project/).
-The Federal Ministry for the Environment, Nature Conservation and
-Nuclear Safety (BMU) supports this initiative on the basis of a decision
-adopted by the German Bundestag. The views expressed are the sole
-responsibility of the authors and do not necessarily reflect the views
-of the funders. The funders are not responsible for any use that may be
-made of the information it contains.
+and the International Climate Initiative (IKI). The Federal Ministry for
+the Environment, Nature Conservation and Nuclear Safety (BMU) supports
+this initiative on the basis of a decision adopted by the German
+Bundestag. The views expressed are the sole responsibility of the
+authors and do not necessarily reflect the views of the funders. The
+funders are not responsible for any use that may be made of the
+information it contains.

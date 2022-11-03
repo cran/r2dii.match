@@ -1,4 +1,4 @@
-#' @importFrom dplyr filter select mutate left_join group_by ungroup
+#' @importFrom dplyr all_of filter select mutate left_join group_by ungroup
 #' @importFrom dplyr if_else rename distinct slice pull
 #' @importFrom glue glue
 #' @importFrom purrr reduce
@@ -8,7 +8,7 @@
 NULL
 
 # Avoid warning due to ambiguous use of external vector to select df columns:
-# https://github.com/2DegreesInvesting/r2dii.match/pull/317
+# https://github.com/RMI-PACTA/r2dii.match/pull/317
 all_of_ <- function(x) {
   if (utils::packageVersion("tidyselect") >= "1.0.0") {
     tidyselect::all_of(x)
