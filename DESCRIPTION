@@ -1,6 +1,6 @@
 Package: r2dii.match
 Title: Tools to Match Corporate Lending Portfolios with Climate Data
-Version: 0.1.4
+Version: 0.2.0
 Authors@R: 
     c(person(given = "Alex",
              family = "Axthelm",
@@ -51,11 +51,12 @@ Imports: data.table, dplyr (>= 0.8.5), glue, lifecycle, magrittr,
         tibble, tidyr, tidyselect, utils
 Suggests: covr, rmarkdown, spelling, testthat (>= 2.1.0)
 Config/testthat/edition: 3
+Config/Needs/website: rmi-pacta/pacta.pkgdown.rmitemplate
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 NeedsCompilation: no
-Packaged: 2023-10-23 14:40:43 UTC; aaxthelm
+Packaged: 2024-03-22 14:39:00 UTC; jdhoffa
 Author: Alex Axthelm [aut, cre] (<https://orcid.org/0000-0001-8579-8565>),
   Jackson Hoffart [aut, ctr] (<https://orcid.org/0000-0002-8600-5042>),
   Mauro Lepore [aut, ctr] (<https://orcid.org/0000-0002-1986-7988>),
@@ -65,4 +66,4 @@ Author: Alex Axthelm [aut, cre] (<https://orcid.org/0000-0001-8579-8565>),
   Rocky Mountain Institute [cph, fnd]
 Maintainer: Alex Axthelm <aaxthelm@rmi.org>
 Repository: CRAN
-Date/Publication: 2023-10-23 15:50:10 UTC
+Date/Publication: 2024-03-25 11:30:03 UTC

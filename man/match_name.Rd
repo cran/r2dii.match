@@ -12,7 +12,7 @@ match_name(
   method = "jw",
   p = 0.1,
   overwrite = NULL,
-  ald = deprecated(),
+  join_id = NULL,
   ...
 )
 }
@@ -39,8 +39,10 @@ only \code{sector}, the value in the \code{name} column should be \code{NA} and
 vice-versa. This file can be used to manually match loanbook companies to
 abcd.}
 
-\item{ald}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{ald} has been superseded by
-\code{abcd}.}
+\item{join_id}{A join specification passed to \code{\link[dplyr:mutate-joins]{dplyr::inner_join()}}. If a
+character string, it assumes identical join columns between \code{loanbook} and
+\code{abcd}. If a named character vector, it uses the name as the join column of \code{loanbook} and
+the value as the join column of \code{abcd}.}
 
 \item{...}{Arguments passed on to \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.}
 }
@@ -120,15 +122,34 @@ match_name(loanbook, abcd, min_score = 0.9)
 your_classifications <- tibble(
   sector = "power",
   borderline = FALSE,
-  code = "3511",
+  code = "D35.11",
   code_system = "XYZ"
 )
+
+# match on LEI
+loanbook <- tibble(
+  sector_classification_system = "XYZ",
+  sector_classification_direct_loantaker = "D35.11",
+  id_ultimate_parent = "UP15",
+  name_ultimate_parent = "Won't fuzzy match",
+  id_direct_loantaker = "C294",
+  name_direct_loantaker = "Won't fuzzy match",
+  lei_direct_loantaker = "LEI123"
+)
+
+abcd <- tibble(
+  name_company = "alpine knits india pvt. limited",
+  sector = "power",
+  lei = "LEI123"
+)
+
+match_name(loanbook, abcd, join_by = c(lei_direct_loantaker = "lei"))
 
 restore <- options(r2dii.match.sector_classifications = your_classifications)
 
 loanbook <- tibble(
   sector_classification_system = "XYZ",
-  sector_classification_direct_loantaker = "3511",
+  sector_classification_direct_loantaker = "D35.11",
   id_ultimate_parent = "UP15",
   name_ultimate_parent = "Alpine Knits India Pvt. Limited",
   id_direct_loantaker = "C294",
