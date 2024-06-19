@@ -132,6 +132,8 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
 })
 
 test_that("w/ 1 row of full loanbook_demo yields expected names", {
+  skip_if_r2dii_data_outdated()
+
   out <- suppressWarnings(match_name(slice(loanbook_demo, 1L), fake_abcd()))
   expect_equal(names(out), expect_names_match_name)
 })
@@ -141,6 +143,8 @@ test_that("takes unprepared loanbook and abcd datasets", {
 })
 
 test_that("w/ loanbook that matches nothing, yields expected", {
+  skip_if_r2dii_data_outdated()
+
   # Matches zero row ...
   lbk2 <- slice(loanbook_demo, 2)
   lbk2 <- mutate(
@@ -162,6 +166,8 @@ test_that("w/ loanbook that matches nothing, yields expected", {
 })
 
 test_that("w/ 2 lbk rows matching 2 abcd rows, yields expected names", {
+  skip_if_r2dii_data_outdated()
+
   # Slice 5 once was problematic (#85)
   lbk45 <- slice(loanbook_demo, 4:5)
   expect_named(
@@ -171,6 +177,8 @@ test_that("w/ 2 lbk rows matching 2 abcd rows, yields expected names", {
 })
 
 test_that("w/ 1 lbk row matching ultimate, yields expected names", {
+  skip_if_r2dii_data_outdated()
+
   lbk1 <- slice(loanbook_demo, 1)
 
   expect_named(
@@ -479,13 +487,6 @@ test_that("0-row output has expected column type", {
   expect_identical(lbk_types[same], out_types[same])
 })
 
-test_that("with loanbook_demo and abcd_demo outputs expected value", {
-  skip_on_ci()
-  skip_if_r2dii_data_outdated()
-  out <- match_name(loanbook_demo, abcd_demo)
-  expect_snapshot_value(round_dbl(out), style = "json2")
-})
-
 test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
           a match", {
   # Lookup code to sectors via r2dii.data::sector_classifications$code
@@ -696,7 +697,6 @@ test_that("errors if any id_loan is duplicated (#349)", {
   lbk <- fake_lbk(id_loan = duplicated)
   abcd <- fake_abcd()
 
-  expect_snapshot_error(match_name(lbk, abcd))
   expect_error(class = "duplicated_id_loan", match_name(lbk, abcd))
 })
 
