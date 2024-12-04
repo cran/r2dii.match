@@ -1,6 +1,6 @@
 Package: r2dii.match
 Title: Tools to Match Corporate Lending Portfolios with Climate Data
-Version: 0.2.1
+Version: 0.3.0
 Authors@R: 
     c(person(given = "Alex",
              family = "Axthelm",
@@ -33,7 +33,7 @@ Authors@R:
              email = "jacob.kastl@gmail.com",
              role = c("ctr"),
              comment = c(ORCID = "0009-0000-8281-8129")),
-      person(given = "Rocky Mountain Institute",
+      person(given = "RMI",
              role = c("cph", "fnd"),
              email = "PACTA4banks@rmi.org"))
 Description: These tools implement in R a fundamental part of the software
@@ -59,9 +59,9 @@ Config/testthat/edition: 3
 Config/Needs/website: rmi-pacta/pacta.pkgdown.rmitemplate
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2024-06-19 15:54:13 UTC; jkastl
+Packaged: 2024-12-03 15:00:33 UTC; jkastl
 Author: Alex Axthelm [aut, cre] (<https://orcid.org/0000-0001-8579-8565>),
   Jackson Hoffart [aut, ctr] (<https://orcid.org/0000-0002-8600-5042>),
   Mauro Lepore [aut, ctr] (<https://orcid.org/0000-0002-1986-7988>),
@@ -69,7 +69,7 @@ Author: Alex Axthelm [aut, cre] (<https://orcid.org/0000-0001-8579-8565>),
   Florence Palandri [aut],
   Evgeny Petrovsky [aut],
   Jacob Kastl [ctr] (<https://orcid.org/0009-0000-8281-8129>),
-  Rocky Mountain Institute [cph, fnd]
+  RMI [cph, fnd]
 Maintainer: Alex Axthelm <aaxthelm@rmi.org>
 Repository: CRAN
-Date/Publication: 2024-06-19 16:10:02 UTC
+Date/Publication: 2024-12-04 10:50:02 UTC
